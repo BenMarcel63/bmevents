@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Booking requests | BM Events{% endblock %}
+{% block content %}
+  <section class="listing-page"><div class="page-heading"><p class="eyebrow">{{ vendor.business_name }} &middot; VENDOR WORKSPACE</p><h1>Booking requests</h1><p>Review new enquiries and keep your upcoming events moving.</p></div><div class="request-list">
+    {% for b in bookings %}
+      <article class="request-card"><div class="request-card-head"><div><p class="card-kicker">Request #{{ b.pk }}</p><h2>{{ b.event_type }}</h2></div><span class="status status-{{ b.status }}">{{ b.get_status_display }}</span></div><div class="request-meta"><span>{{ b.full_name }}</span><span>{{ b.event_date|default:'Date to be confirmed' }}</span><span>{{ b.guests|default:'Guest count to be confirmed' }} guests</span></div><div class="request-actions"><a href="{% url 'booking_detail' b.pk %}" class="text-link">View details &rarr;</a>
+        {% if b.status == 'requested' %}
+          <a href="{% url 'booking_accept' b.pk %}" class="small-btn">Accept</a>
+          <a href="{% url 'booking_decline' b.pk %}" class="small-btn danger">Decline</a>
+        {% endif %}<a href="{% url 'booking_conversation' b.pk %}" class="small-btn">Conversation</a></div>{% if b.message %}<p class="request-message"><strong>Client message</strong>{{ b.message|linebreaksbr }}</p>{% endif %}</article>
+    {% empty %}
+      <div class="empty-state"><h2>No requests for {{ vendor.business_name }} yet.</h2><p>Clients must select this vendor profile when sending a booking request. New enquiries will appear here automatically.</p><a href="{% url 'vendor_detail' vendor.pk %}" class="primary-btn">View public profile</a></div>
+    {% endfor %}
+  </div></section>
+{% endblock %}

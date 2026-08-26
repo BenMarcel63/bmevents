@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Book {{ vendor.business_name }} | BM Events{% endblock %}
+{% block content %}
+  <section class="form-page booking-page">
+    <div class="form-intro"><a href="{% url 'vendor_detail' vendor.pk %}" class="back-link">&larr; Back to {{ vendor.business_name }}</a><p class="eyebrow">BOOKING REQUEST</p><h1>Let's plan something remarkable.</h1><p>Tell {{ vendor.business_name }} a little about your event. They will review your request and get back to you.</p></div>
+    <form method="post" action="{% url 'create_booking' vendor.pk %}" class="site-form form-panel" id="booking-form">
+      {% csrf_token %}
+      {% if form.non_field_errors %}<div class="form-errors">{{ form.non_field_errors }}</div>{% endif %}
+      {% for field in form %}<label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} <span>*</span>{% endif %}</label>{{ field }}{% for error in field.errors %}<small class="field-error">{{ error }}</small>{% endfor %}{% endfor %}
+      <button type="submit" class="primary-btn">Send booking request</button>
+      <p class="form-note">Your request is free to send. Payment is only required after the vendor accepts.</p>
+    </form>
+  </section>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Conversation for booking #{{ booking.pk }} | BM Events{% endblock %}
+{% block content %}
+  <section class="conversation-page">
+    <a href="{% url 'booking_detail' booking.pk %}" class="back-link">&larr; Back to booking</a>
+    <div class="page-heading"><p class="eyebrow">PRIVATE CONVERSATION</p><h1>{{ booking.event_type }}</h1><p>Discuss the details of your event with {{ booking.vendor.business_name }}.</p></div>
+    <div class="conversation-panel">
+      <div class="conversation-messages">
+        {% for message in conversation %}
+          <article class="conversation-message {% if message.sender == user %}message-mine{% endif %}"><div class="message-meta"><strong>{{ message.sender.get_full_name|default:message.sender.username }}</strong><time datetime="{{ message.created_at|date:'c' }}">{{ message.created_at|date:'M j, Y g:i A' }}</time></div><p>{{ message.body|linebreaksbr }}</p></article>
+        {% empty %}
+          <div class="empty-state compact"><p>No messages yet. Start the conversation below.</p></div>
+        {% endfor %}
+      </div>
+      <form method="post" class="site-form conversation-form">{% csrf_token %}{% if form.non_field_errors %}<div class="form-errors">{{ form.non_field_errors }}</div>{% endif %}<label for="{{ form.body.id_for_label }}">New message</label>{{ form.body }}{% for error in form.body.errors %}<small class="field-error">{{ error }}</small>{% endfor %}<button type="submit" class="primary-btn">Send message</button></form>
+    </div>
+  </section>
+{% endblock %}

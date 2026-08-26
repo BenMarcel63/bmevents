@@ -1,0 +1,5 @@
+{% extends 'base.html' %}
+{% block title %}Edit service | BM Events{% endblock %}
+{% block content %}
+  <section class="form-page"><div class="form-intro"><a href="{% url 'vendor_dashboard' %}" class="back-link">&larr; Back to dashboard</a><p class="eyebrow">YOUR OFFERING</p><h1>Refine your service.</h1><p>Keep the details current so clients know exactly what to expect.</p></div><form method="post" class="site-form form-panel">{% csrf_token %}{% for field in form %}<label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} <span>*</span>{% endif %}</label>{{ field }}{% for error in field.errors %}<small class="field-error">{{ error }}</small>{% endfor %}{% endfor %}<div class="form-actions"><a href="{% url 'vendor_dashboard' %}" class="secondary-btn">Cancel</a><button type="submit" class="primary-btn">Save changes</button></div></form></section>
+{% endblock %}

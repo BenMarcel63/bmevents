@@ -1,0 +1,5 @@
+{% extends 'base.html' %}
+{% block title %}Edit profile | BM Events{% endblock %}
+{% block content %}
+  <section class="form-page"><div class="form-intro"><a href="{% url 'vendor_dashboard' %}" class="back-link">&larr; Back to dashboard</a><p class="eyebrow">YOUR PUBLIC PROFILE</p><h1>Tell clients what you do best.</h1><p>A clear profile helps the right people find and trust your business.</p></div><form method="post" class="site-form form-panel">{% csrf_token %}{% if form.non_field_errors %}<div class="form-errors">{{ form.non_field_errors }}</div>{% endif %}{% for field in form %}<label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} <span>*</span>{% endif %}</label>{{ field }}{% for error in field.errors %}<small class="field-error">{{ error }}</small>{% endfor %}{% endfor %}<div class="form-actions"><a href="{% url 'vendor_dashboard' %}" class="secondary-btn">Cancel</a><button type="submit" class="primary-btn">Save profile</button></div></form></section>
+{% endblock %}

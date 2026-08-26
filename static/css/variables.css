@@ -1,0 +1,108 @@
+/* =========================================
+   BM EVENTS DESIGN SYSTEM
+   Global Variables
+========================================= */
+
+
+/* =========================
+   COLORS
+========================= */
+
+:root {
+
+    /* Brand Colors */
+
+    --primary-dark: #0F172A;
+
+    --gold: #C8A95B;
+
+    --gold-light: #E8D39A;
+
+
+
+    /* Background Colors */
+
+    --background-light: #F8F9FC;
+
+    --white: #FFFFFF;
+
+
+
+    /* Text Colors */
+
+    --text-dark: #1F2937;
+
+    --text-light: #6B7280;
+
+
+
+    /* Borders */
+
+    --border-light: rgba(255,255,255,0.15);
+
+
+
+    /* =========================
+       SHADOWS
+    ========================= */
+
+
+    --shadow-sm:
+    0 5px 15px rgba(0,0,0,0.08);
+
+
+
+    --shadow-md:
+    0 15px 35px rgba(0,0,0,0.12);
+
+
+
+    --shadow-lg:
+    0 25px 60px rgba(0,0,0,0.18);
+
+
+
+    /* =========================
+       BORDER RADIUS
+    ========================= */
+
+
+    --radius-sm: 10px;
+
+    --radius-md: 20px;
+
+    --radius-lg: 35px;
+
+
+
+    /* =========================
+       TRANSITIONS
+    ========================= */
+
+
+    --transition:
+    all .35s ease;
+
+
+
+    /* =========================
+       CONTAINER
+    ========================= */
+
+
+    --container-width: 1200px;
+
+
+
+    /* =========================
+       SPACING
+    ========================= */
+
+
+    --section-padding:
+
+    100px;
+
+
+
+}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}My activities | BM Events{% endblock %}
+{% block content %}
+  <section class="listing-page">
+    <div class="page-heading">
+      <p class="eyebrow">YOUR EVENT JOURNEY</p>
+      <h1>My activities</h1>
+      <p>Keep track of your booking requests and accepted event plans in one place.</p>
+    </div>
+    <div class="request-list">
+      {% for booking in bookings %}
+        <article class="request-card">
+          <div class="request-card-head"><div><p class="card-kicker">Booking #{{ booking.pk }}</p><h2>{{ booking.event_type }}</h2></div><span class="status status-{{ booking.status }}">{{ booking.get_status_display }}</span></div>
+          <div class="request-meta"><span>{{ booking.vendor.business_name }}</span><span>{{ booking.event_date|default:'Date to be confirmed' }}</span><span>{{ booking.guests|default:'Guest count to be confirmed' }} guests</span></div>
+          <div class="request-actions"><a href="{% url 'booking_detail' booking.pk %}" class="text-link">View booking &rarr;</a><a href="{% url 'booking_conversation' booking.pk %}" class="small-btn">Conversation</a>{% if booking.status == 'accepted' %}<a href="{% url 'booking_payment' booking.pk %}" class="small-btn">Continue to payment</a>{% endif %}</div>
+        </article>
+      {% empty %}
+        <div class="empty-state"><h2>Your event story starts here.</h2><p>Browse our trusted vendors and send your first booking request.</p><a href="{% url 'vendor_list' %}" class="primary-btn">Explore vendors</a></div>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}

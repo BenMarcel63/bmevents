@@ -1,0 +1,5 @@
+{% extends 'base.html' %}
+{% block title %}Payment | BM Events{% endblock %}
+{% block content %}
+  <section class="form-page payment-page"><div class="form-intro"><p class="eyebrow">FINAL STEP</p><h1>Confirm your event booking.</h1><p>Your request with <strong>{{ booking.vendor.business_name }}</strong> has been accepted. This demo checkout records your confirmation without collecting card details.</p></div><form method="post" class="site-form form-panel"><div class="payment-summary"><span>Booking #{{ booking.pk }}</span><strong>{{ booking.event_type }}</strong><span>{{ booking.event_date|default:'Date to be confirmed' }}</span></div>{% csrf_token %}<label class="check-row"><input type="checkbox" required> I confirm the event details above.</label><button type="submit" class="primary-btn">Confirm payment</button><p class="form-note">This is a local demo payment flow. No financial information is collected.</p></form></section>
+{% endblock %}

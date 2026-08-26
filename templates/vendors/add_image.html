@@ -1,0 +1,5 @@
+{% extends 'base.html' %}
+{% block title %}Add gallery image | BM Events{% endblock %}
+{% block content %}
+  <section class="form-page"><div class="form-intro"><a href="{% url 'vendor_dashboard' %}" class="back-link">&larr; Back to dashboard</a><p class="eyebrow">SHOW YOUR WORK</p><h1>Add a gallery image.</h1><p>Let future clients see the care and character behind your events.</p></div><form method="post" enctype="multipart/form-data" class="site-form form-panel">{% csrf_token %}{% for field in form %}<label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} <span>*</span>{% endif %}</label>{{ field }}{% for error in field.errors %}<small class="field-error">{{ error }}</small>{% endfor %}{% endfor %}<div class="form-actions"><a href="{% url 'vendor_dashboard' %}" class="secondary-btn">Cancel</a><button type="submit" class="primary-btn">Upload image</button></div></form></section>
+{% endblock %}

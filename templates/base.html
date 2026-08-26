@@ -1,0 +1,57 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}BM Events{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/variables.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+  </head>
+  <body class="app-page">
+    <header class="app-header">
+      <nav class="app-nav" aria-label="Main navigation">
+        <a href="{% url 'index' %}" class="logo"><span>BM</span> Events</a>
+        <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+        <div class="nav-links">
+          <a href="{% url 'index' %}">Home</a>
+          <a href="{% url 'vendor_list' %}">Find vendors</a>
+        {% if user.is_authenticated %}
+            {% if user.is_vendor %}
+              <a href="{% url 'vendor_dashboard' %}">Dashboard</a>
+              <a href="{% url 'vendor_requests' %}">Requests</a>
+            {% endif %}
+            <form method="post" action="{% url 'logout' %}" class="logout-form">
+              {% csrf_token %}
+              <button type="submit" class="nav-link-button nav-link-muted">Log out</button>
+            </form>
+          {% else %}
+            <a href="{% url 'login' %}">Log in</a>
+            <a href="{% url 'register' %}">Create account</a>
+          {% endif %}
+        </div>
+        {% if user.is_authenticated and user.is_client %}<a href="{% url 'client_activities' %}" class="nav-button">Book an event</a>{% else %}<a href="{% url 'vendor_list' %}" class="nav-button">Book an event</a>{% endif %}
+      </nav>
+      {% if messages %}
+        <ul class="messages" aria-live="polite">
+          {% for message in messages %}
+            <li class="message message-{{ message.tags|default:'info' }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </header>
+    <main class="page-content">
+      {% block content %}{% endblock %}
+    </main>
+    <footer class="app-footer">
+      <a href="{% url 'index' %}" class="logo"><span>BM</span> Events</a>
+      <p>Thoughtful celebrations, beautifully brought together.</p>
+      <small>&copy; 2026 BM Events</small>
+    </footer>
+    <script src="{% static 'js/app.js' %}"></script>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Find vendors | BM Events{% endblock %}
+{% block content %}
+  <section class="listing-page">
+    <div class="page-heading">
+      <p class="eyebrow">THE BM EVENTS DIRECTORY</p>
+      <h1>Find the people who make it happen.</h1>
+      <p>Explore trusted professionals for weddings, celebrations, corporate gatherings, and everything in between.</p>
+    </div>
+    <div class="vendor-grid">
+    {% for vendor in vendors %}
+      <article class="vendor-card">
+        {% with image=vendor.gallery.first %}
+          {% if image %}<img src="{{ image.image.url }}" alt="{{ image.caption|default:vendor.business_name }}">{% else %}<div class="vendor-placeholder">BM</div>{% endif %}
+        {% endwith %}
+        <div class="vendor-card-body">
+          <p class="card-kicker">{{ vendor.location|default:'Available nationwide' }}</p>
+          <h2>{{ vendor.business_name }}</h2>
+          <p>{{ vendor.description|default:'A trusted BM Events professional ready to help shape your occasion.'|truncatewords:22 }}</p>
+          <a href="{% url 'vendor_detail' vendor.pk %}" class="text-link">View profile <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>
+    {% empty %}
+      <div class="empty-state"><h2>Our directory is growing.</h2><p>Check back soon as new event professionals join BM Events.</p><a href="{% url 'register_vendor' %}" class="primary-btn">Become a vendor</a></div>
+    {% endfor %}
+    </div>
+  </section>
+{% endblock %}

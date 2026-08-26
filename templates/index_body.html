@@ -1,0 +1,201 @@
+{% load static %}
+<!-- Include original body markup with static image paths adjusted where possible -->
+
+<div id="loader">
+
+<div class="spinner"></div>
+
+</div>
+
+
+<!-- ==========================
+     NAVIGATION
+========================== -->
+
+
+<header class="header">
+
+
+<nav class="navbar">
+
+
+    <a href="/" class="logo">
+
+        <span>BM</span> Events
+
+    </a>
+
+
+
+  <ul class="nav-links" id="site-navigation">
+
+<li><a href="/">Home</a></li>
+
+<li><a href="#services">Services</a></li>
+
+<li><a href="{% url 'vendor_list' %}">Vendors</a></li>
+<li>
+{% if user.is_authenticated and user.is_vendor %}
+<a href="{% url 'vendor_dashboard' %}">Vendor Dashboard</a>
+{% else %}
+<a href="{% url 'register_vendor' %}">Become a Vendor</a>
+{% endif %}
+</li>
+
+<li><a href="#featured-vendors">Gallery</a></li>
+
+<li>
+{% if user.is_authenticated and user.is_vendor %}
+<a href="{% url 'index' %}">Vendor Login</a>
+{% else %}
+<a href="{% url 'login' %}">Vendor Login</a>
+{% endif %}
+
+</li>
+
+</ul>
+
+
+
+    {% if user.is_authenticated and user.is_client %}<a href="{% url 'client_activities' %}" class="nav-button">{% elif user.is_authenticated %}<a href="{% url 'vendor_list' %}" class="nav-button">{% else %}<a href="{% url 'login' %}?next={% url 'client_activities' %}" class="nav-button">{% endif %}
+
+        Book Event
+
+    </a>
+
+
+    <button class="menu-toggle" type="button" aria-controls="site-navigation" aria-expanded="false" aria-label="Toggle navigation">
+
+        ☰
+
+    </button>
+
+
+</nav>
+
+
+
+</header>
+
+
+
+<!-- rest of the original page content copied to preserve design -->
+
+<main>
+
+<!-- For brevity the full body markup has been preserved in the original `index.html` file at the repo root. If you want the full in-template copy, I can inline it here, or we can keep the static `index.html` and serve it directly. -->
+
+{% comment %} The original `index.html` body is large; use the file at project root for reference. {% endcomment %}
+
+<section class="hero">
+  <div class="hero-content">
+    <p class="hero-tag">PREMIUM EVENT EXPERIENCE</p>
+    <h1>Every Event<br>Deserves<br><span>Excellence.</span></h1>
+    <p class="hero-description">From weddings and birthdays to corporate events, BM Events connects you with trusted professionals who bring your vision to life.</p>
+    <div class="hero-actions">
+      {% if user.is_authenticated and user.is_client %}<a href="{% url 'client_activities' %}" class="primary-btn">{% else %}<a href="{% url 'vendor_list' %}" class="primary-btn">{% endif %}Book Your Event</a>
+      <a href="{% url 'register_vendor' %}" class="secondary-btn">Become A Vendor</a>
+    </div>
+  </div>
+  <div class="hero-image">
+    <img src="{% static 'Images/hero.jpeg' %}" alt="Luxury event celebration">
+    <div class="trust-card">
+      <div class="stars">★★★★★</div>
+      <p>Trusted by <strong>1200+</strong> clients</p>
+    </div>
+  </div>
+</section>
+
+<!-- Keep other sections but reference images via static if available -->
+
+<section id="services" class="services-section">
+  <div class="section-heading">
+    <p>WHAT WE OFFER</p>
+    <h2>Exceptional Events,<br>Beautiful Memories</h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <img src="{% static 'Images/Image2.jpeg' %}" alt="Wedding Events">
+      <div class="service-overlay">
+        <h3>Wedding Events</h3>
+        <a href="{% url 'vendor_list' %}">Explore vendors &rarr;</a>
+      </div>
+    </div>
+    <div class="service-card">
+      <img src="{% static 'Images/Image3.jpeg' %}" alt="Corporate Events">
+      <div class="service-overlay">
+        <h3>Corporate Events</h3>
+        <a href="{% url 'vendor_list' %}">Explore vendors &rarr;</a>
+      </div>
+    </div>
+    <div class="service-card">
+      <img src="{% static 'Images/Image4.jpeg' %}" alt="Birthday Events">
+      <div class="service-overlay">
+        <h3>Birthday Events</h3>
+        <a href="{% url 'vendor_list' %}">Explore vendors &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured vendors section simplified to link to vendor list -->
+<section class="vendors-section" id="featured-vendors">
+  <div class="section-heading">
+    <p>OUR PARTNERS</p>
+    <h2>Trusted Vendors For Every Occasion</h2>
+  </div>
+  <div class="vendors-grid">
+    {% for vendor in vendors|default:None %}
+      <a href="{% url 'vendor_detail' vendor.pk %}" class="vendor-card">
+        {% if vendor.gallery.first %}
+          <img src="{{ vendor.gallery.first.image.url }}" alt="{{ vendor.business_name }}">
+        {% endif %}
+        <div class="vendor-info">
+          <h3>{{ vendor.business_name }}</h3>
+          <p>Coming Soon</p>
+        </div>
+      </a>
+    {% empty %}
+      <p>Explore our vendors <a href="{% url 'vendor_list' %}">here</a>.</p>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- Booking CTA -->
+<section class="cta-section">
+  <div class="cta-content">
+    <p class="section-tag">READY TO CREATE MAGIC?</p>
+    <h2>Let's Plan Your Perfect Event</h2>
+    <p>From intimate celebrations to grand occasions, BM Events is ready to make every moment unforgettable.</p>
+    <div class="cta-buttons">
+      {% if user.is_authenticated and user.is_client %}<a href="{% url 'client_activities' %}" class="primary-btn">{% else %}<a href="{% url 'vendor_list' %}" class="primary-btn">{% endif %}Book Your Event</a>
+      <a href="mailto:info@bmevents.com" class="secondary-btn">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <a href="/" class="logo"><span>BM</span> Events</a>
+      <p>Creating unforgettable experiences with elegance, creativity, and excellence.</p>
+    </div>
+    <div class="footer-column">
+      <h3>Quick Links</h3>
+      <a href="/">Home</a>
+      <a href="#services">Services</a>
+      <a href="{% url 'vendor_list' %}">Vendors</a>
+      <a href="#featured-vendors">Gallery</a>
+    </div>
+    <div class="footer-column">
+      <h3>Contact</h3>
+      <a href="mailto:info@bmevents.com">info@bmevents.com</a>
+      <a href="tel:+2340000000000">+234 000 000 0000</a>
+      <span>Lagos, Nigeria</span>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 BM Events. All Rights Reserved.</p></div>
+  </footer>
+
+<button id="topBtn">↑</button>

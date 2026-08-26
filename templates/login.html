@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Log in | BM Events{% endblock %}
+{% block content %}
+  <section class="form-page">
+    <div class="form-intro">
+      <p class="eyebrow">WELCOME BACK</p>
+      <h1>Bring your next event to life.</h1>
+      <p>Sign in to manage your bookings, respond to requests, and keep every detail in one place.</p>
+    </div>
+    <form method="post" class="site-form form-panel">
+      {% csrf_token %}
+      {% if form.non_field_errors %}<div class="form-errors">{{ form.non_field_errors }}</div>{% endif %}
+      {% for field in form %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} <span>*</span>{% endif %}</label>
+        {{ field }}
+        {% for error in field.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+      {% endfor %}
+      <button type="submit" class="primary-btn">Log in</button>
+      <p class="form-note">New to BM Events? <a href="{% url 'register' %}">Create a client account</a>.</p>
+    </form>
+  </section>
+{% endblock %}

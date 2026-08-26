@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Create an account | BM Events{% endblock %}
+{% block content %}
+  <section class="form-page">
+    <div class="form-intro">
+      <p class="eyebrow">YOUR EVENT, YOUR WAY</p>
+      <h1>Start planning something memorable.</h1>
+      <p>Create a free account to connect with trusted event professionals.</p>
+    </div>
+    <form method="post" class="site-form form-panel">
+      {% csrf_token %}
+      {% if form.non_field_errors %}<div class="form-errors">{{ form.non_field_errors }}</div>{% endif %}
+      {% for field in form %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} <span>*</span>{% endif %}</label>
+        {{ field }}
+        {% for error in field.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+      {% endfor %}
+      <button type="submit" class="primary-btn">Create account</button>
+      <p class="form-note">Planning events professionally? <a href="{% url 'register_vendor' %}">Join as a vendor</a>.</p>
+    </form>
+  </section>
+{% endblock %}
